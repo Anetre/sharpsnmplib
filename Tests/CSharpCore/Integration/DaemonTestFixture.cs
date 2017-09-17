@@ -81,6 +81,7 @@ namespace Lextm.SharpSnmpLib.Integration
             var pipelineFactory = new SnmpApplicationFactory(store, membership, handlerFactory);
             var listener = new Listener { Users = users };
             listener.ExceptionRaised += (sender, e) => { Assert.True(false, "unexpected exception");};
+            listener.MessageReceived += (sender, e) => { Console.WriteLine($"{DateTime.Now.ToString("o")} agent received"); };
             return new SnmpEngine(pipelineFactory, listener, new EngineGroup());
         }
 
@@ -212,7 +213,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("authenticationauthentication"));
                 IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
 
-                var timeout = 1500;
+                var timeout = 15000;
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, serverEndPoint);
 
@@ -251,19 +252,23 @@ namespace Lextm.SharpSnmpLib.Integration
                 discoverer.AgentFound += (sender, args)
                     =>
                 {
+                    Console.WriteLine($"{DateTime.Now.ToString("o")} agent");
                     Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
                     signal.Set();
                 };
+                Console.WriteLine($"{DateTime.Now.ToString("o")} sent");
                 discoverer.Discover(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
                     new OctetString("public"), timeout);
                 Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
+                Console.WriteLine($"{DateTime.Now.ToString("o")} sent");
                 discoverer.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
                     new OctetString("public"), timeout);
                 Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
+                Console.WriteLine($"{DateTime.Now.ToString("o")} sent");
                 discoverer.Discover(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null,
                     timeout);
                 Assert.True(signal.WaitOne(wait));
@@ -295,19 +300,23 @@ namespace Lextm.SharpSnmpLib.Integration
                 discoverer.AgentFound += (sender, args)
                     =>
                 {
+                    Console.WriteLine($"{DateTime.Now.ToString("o")} agent");
                     Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
                     signal.Set();
                 };
+                Console.WriteLine($"{DateTime.Now.ToString("o")} sent");
                 await discoverer.DiscoverAsync(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
                     new OctetString("public"), timeout);
                 Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
+                Console.WriteLine($"{DateTime.Now.ToString("o")} sent");
                 await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
                     new OctetString("public"), timeout);
                 Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
+                Console.WriteLine($"{DateTime.Now.ToString("o")} sent");
                 await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
                     null, timeout);
                 Assert.True(signal.WaitOne(wait));
@@ -579,7 +588,7 @@ namespace Lextm.SharpSnmpLib.Integration
 
                 Assert.True(message.ToBytes().Length > 10000);
 
-                var time = 1500;
+                var time = 15000;
                 if (SnmpMessageExtension.IsRunningOnMac)
                 {
                     var exception =

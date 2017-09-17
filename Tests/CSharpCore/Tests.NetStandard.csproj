@@ -8,17 +8,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutputType Condition="'$(TargetFramework)'!='net452'">Exe</OutputType>
-    <TargetFrameworks>netcoreapp1.0;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.0;netcoreapp2.0;net452</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="**\*.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Properties\Resources.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="Properties\Resources.resx" />
-  </ItemGroup>
   <ItemGroup>
     <None Remove="packages.config" />
     <None Remove="Tests.csproj.vspscc" />
@@ -28,12 +19,11 @@
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.2.0">
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0">
-    </PackageReference>
+    <PackageReference Include="xunit" Version="2.3.0-beta5-build3769" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta5-build3769" />
     <PackageReference Include="Moq" Version="4.7.99" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta5-build3769" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.csproj" />

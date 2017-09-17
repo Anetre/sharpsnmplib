@@ -22,7 +22,6 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
     /// </summary>
     public class GetRequestMessageTestFixture
     {
-#if !NETSTANDARD
         [Fact]
         public void Test()
         {
@@ -48,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), list);
             Assert.True(File.ReadAllBytes(Path.Combine("Resources", "get.dat")).Length >= message.ToBytes().Length);
         }
-#endif
+
         [Fact]
         public void TestConstructorV3Auth1()
         {

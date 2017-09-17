@@ -188,8 +188,7 @@ namespace Lextm.SharpSnmpLib.Integration
             var membership = new ComposedMembershipProvider(new IMembershipProvider[] {v1, v2, v3});
             var handlerFactory = new MessageHandlerFactory(new[] {trapv1Mapping, trapv2Mapping, informMapping});
 
-            var logger = new TestLogger();
-            logger.Handler = (obj, args) => { manualEvent.Set(); };
+            var logger = new TestLogger { Handler = (obj, args) => { manualEvent.Set(); } };
 
             var pipelineFactory = new SnmpApplicationFactory(logger, store, membership, handlerFactory);
             var group = new EngineGroup();
@@ -232,7 +231,7 @@ namespace Lextm.SharpSnmpLib.Integration
 
         class TestLogger : ILogger
         {
-            public EventHandler Handler;
+            public EventHandler Handler { get; set; }
 
             public void Log(ISnmpContext context)
             {

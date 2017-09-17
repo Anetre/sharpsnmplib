@@ -68,6 +68,7 @@
     <Compile Include="..\SharpSnmpLib\Properties\AssemblyInfo.cs" />
     <Compile Include="..\SharpSnmpLib\Security\AESPrivacyProvider.cs" />
     <Compile Include="..\SharpSnmpLib\Security\DESPrivacyProvider.cs" />
+    <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -83,6 +84,12 @@
   <Target Name="AfterBuild">
     <Gendarme Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' AND Exists('..\gendarme\gendarme.exe')" GendarmeExeFilename="..\gendarme\gendarme.exe" Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent />
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent />
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

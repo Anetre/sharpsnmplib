@@ -109,11 +109,63 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="raw">Raw bytes</param>
         internal ObjectIdentifier(byte[] raw)
+#if NETCOREAPP2_0
+            : this(raw.Length, raw.Length.WritePayloadLength(), new Span<byte>(raw))
+#else
             : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
+#endif
         {
             // IMPORTANT: for test project only.
         }
 
+#if NETCOREAPP2_0
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectIdentifier"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        [CLSCompliant(false)]
+        public ObjectIdentifier(int Item1, Span<byte> Item2, Span<byte> stream)
+        {
+            _raw = stream.ToArray();
+            if (Item1 == 0)
+            {
+                throw new ArgumentException("Byte length cannot be 0.", nameof(Item1));
+            }
+
+            var result = new List<uint> { (uint)(_raw[0] / 40), (uint)(_raw[0] % 40) };
+            uint buffer = 0;
+            for (var i = 1; i < _raw.Length; i++)
+            {
+                if ((_raw[i] & 0x80) == 0)
+                {
+                    result.Add(_raw[i] + (buffer << 7));
+                    buffer = 0;
+                }
+                else
+                {
+                    buffer <<= 7;
+                    buffer += (uint)(_raw[i] & 0x7F);
+                }
+            }
+
+            _oid = result.ToArray();
+            _length = Item2.ToArray();
+            unchecked
+            {
+                if (_hashcode == 0)
+                {
+                    var hash = 0;
+                    for (var i = _oid.Length - 1; i >= 0; i--)
+                    {
+                        hash ^= (int)_oid[i];
+                    }
+
+                    _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.
+                }
+            }
+        }
+#else
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectIdentifier"/> class.
         /// </summary>
@@ -170,8 +222,8 @@ namespace Lextm.SharpSnmpLib
                 }
             }
         }
-
-        #endregion Constructor
+#endif
+#endregion Constructor
 
         /// <summary>
         /// Convers to numerical ID.
@@ -406,7 +458,7 @@ namespace Lextm.SharpSnmpLib
         /// Greater than zero
         /// This instance is greater than <paramref name="obj"/>.
         /// </returns>
-        /// <exception cref="T:System.ArgumentException">
+        /// <exception cref="System.ArgumentException">
         ///     <paramref name="obj"/> is not the same type as this instance.
         /// </exception>
         public int CompareTo(object obj)
@@ -527,6 +579,16 @@ namespace Lextm.SharpSnmpLib
             Array.Copy(original, tmp, length);
             tmp[length] = extra;
             return tmp;
+        }
+
+        public static bool operator <=(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >=(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }
