@@ -74,7 +74,6 @@ namespace Lextm.SharpSnmpLib.Unit.Pipeline
             var pipelineFactory = new SnmpApplicationFactory(store, membership, handlerFactory);
             var listener = new Listener { Users = users };
             listener.ExceptionRaised += (sender, e) => { Assert.True(false, "unexpected exception"); };
-            listener.MessageReceived += (sender, e) => { Console.WriteLine($"{DateTime.Now.ToString("o")} agent received"); };
             return new SnmpEngine(pipelineFactory, listener, new EngineGroup());
         }
 

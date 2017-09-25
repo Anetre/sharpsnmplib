@@ -55,7 +55,6 @@ namespace Lextm.SharpSnmpLib.Integration
             var daemonEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
             engine.Listener.AddBinding(daemonEndPoint);
             engine.Listener.ExceptionRaised += (sender, e) => { Assert.True(false, "unhandled exception"); };
-            engine.Listener.MessageReceived += (sender, e) => { Console.WriteLine(e.Message); };
             engine.Start();
 
             try
