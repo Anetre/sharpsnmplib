@@ -18,6 +18,8 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
     /// </summary>
     public class ListenerTestFixture
     {
+        static NumberGenerator port = new NumberGenerator(55000, 60000);
+
         [Fact]
         public void AddBindingDuplicate()
         {
@@ -41,9 +43,8 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void Restart()
         {
-            Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
-            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), port.NextId));
             Assert.False(listener.Active);
             listener.Start();
             Assert.True(listener.Active);
@@ -58,9 +59,8 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void DoubleStart()
         {
-            Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
-            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), port.NextId));
             Assert.False(listener.Active);
             listener.Start();
             Assert.True(listener.Active);
@@ -73,9 +73,8 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void DoubleStop()
         {
-            Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
-            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), port.NextId));
             Assert.False(listener.Active);
             listener.Start();
             Assert.True(listener.Active);
@@ -88,9 +87,8 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void InitialStop()
         {
-            Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
-            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), port.NextId));
             Assert.False(listener.Active);
             listener.Stop();
             Assert.False(listener.Active);
