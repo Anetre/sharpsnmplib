@@ -373,7 +373,7 @@ namespace Lextm.SharpSnmpLib.Integration
 
         [Theory]
         [InlineData(32)]
-        public async Task TestResponsesFromSingleSource(int count)
+        public void TestResponsesFromSingleSource(int count)
         {
             var start = 0;
             var end = start + count;
@@ -381,15 +381,17 @@ namespace Lextm.SharpSnmpLib.Integration
             engine.Listener.ClearBindings();
             var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
             engine.Listener.AddBinding(serverEndPoint);
-            //// IMPORTANT: need to set min thread count so as to boost performance.
-            //int minWorker, minIOC;
-            //// Get the current settings.
-            //ThreadPool.GetMinThreads(out minWorker, out minIOC);
-            //var threads = engine.Listener.Bindings.Count;
-            //ThreadPool.SetMinThreads(threads + 1, minIOC);
-
+#if NET452
+            // IMPORTANT: need to set min thread count so as to boost performance.
+            int minWorker, minIOC;
+            // Get the current settings.
+            ThreadPool.GetMinThreads(out minWorker, out minIOC);
+            var threads = engine.Listener.Bindings.Count;
+            ThreadPool.SetMinThreads(threads + 1, minIOC);
+#endif
             engine.Start();
 
+            var timeout = 10000;
             try
             {
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -397,12 +399,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 {
                     GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"),
                         new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
-                    Stopwatch watch = new Stopwatch();
-                    watch.Start();
-                    var response =
-                        await
-                            message.GetResponseAsync(serverEndPoint, new UserRegistry(), socket);
-                    watch.Stop();
+                    var response = message.GetResponse(timeout, serverEndPoint, new UserRegistry(), socket);
                     Assert.Equal(0, response.RequestId());
                 }
             }
@@ -425,7 +422,7 @@ namespace Lextm.SharpSnmpLib.Integration
             engine.Listener.ClearBindings();
             var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
             engine.Listener.AddBinding(serverEndPoint);
-#if NET452 
+#if NET452
             // IMPORTANT: need to set min thread count so as to boost performance.
             int minWorker, minIOC;
             // Get the current settings.
@@ -450,10 +447,7 @@ namespace Lextm.SharpSnmpLib.Integration
                         // Comment below to reveal wrong sequence number issue.
                         Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                        Stopwatch watch = new Stopwatch();
-                        watch.Start();
                         var response = message.GetResponse(timeout, serverEndPoint, socket);
-                        watch.Stop();
                         Assert.Equal(index, response.RequestId());
                     }
                 );
