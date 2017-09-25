@@ -168,7 +168,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
         [CLSCompliant(false)]
-        public IP(int Item1, Span<byte> Item2, Span<byte> stream)
+        public IP(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             if (Item1 != IPv4Length)
             {

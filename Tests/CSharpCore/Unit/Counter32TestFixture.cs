@@ -81,9 +81,9 @@ namespace Lextm.SharpSnmpLib.Unit
         public void TestContructor3()
         {
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new Counter32(1, new Span<byte>(new byte[] { 1 }), null));
-            Assert.Throws<ArgumentException>(() => new Counter32(0, new Span<byte>(new byte[] { 0 }), new Span<byte>()));
-            Assert.Throws<ArgumentException>(() => new Counter32(6, new Span<byte>(new byte[] { 6 }), new Span<byte>()));
+            Assert.Throws<ArgumentNullException>(() => new Counter32(1, new ReadOnlySpan<byte>(new byte[] { 1 }), null));
+            Assert.Throws<ArgumentException>(() => new Counter32(0, new ReadOnlySpan<byte>(new byte[] { 0 }), new ReadOnlySpan<byte>()));
+            Assert.Throws<ArgumentException>(() => new Counter32(6, new ReadOnlySpan<byte>(new byte[] { 6 }), new ReadOnlySpan<byte>()));
 #else
             Assert.Throws<ArgumentNullException>(() => new Counter32(new Tuple<int, byte[]>(1, new byte[] { 1 }), null));
             Assert.Throws<ArgumentException>(() => new Counter32(new Tuple<int, byte[]>(0, new byte[] { 0 }), new MemoryStream()));

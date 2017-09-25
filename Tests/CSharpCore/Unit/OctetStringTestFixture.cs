@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Unit
         public void TestException()
         {
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new OctetString(0, new Span<byte>(new byte[] { 0 }), null));
+            Assert.Throws<ArgumentNullException>(() => new OctetString(0, new ReadOnlySpan<byte>(new byte[] { 0 }), null));
 #else
             Assert.Throws<ArgumentNullException>(() => new OctetString(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
 #endif
@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestChinese()
         {
-            Assert.Equal("ÖÐ¹ú", new OctetString("ÖÐ¹ú", Encoding.Unicode).ToString(Encoding.Unicode));
+            Assert.Equal("ï¿½Ð¹ï¿½", new OctetString("ï¿½Ð¹ï¿½", Encoding.Unicode).ToString(Encoding.Unicode));
         }
     }
 }

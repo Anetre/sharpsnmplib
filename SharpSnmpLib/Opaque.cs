@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Opaque"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal Opaque(byte[] raw) : this(raw.Length, raw.Length.WritePayloadLength(), new Span<byte>(raw))
+        internal Opaque(byte[] raw) : this(raw.Length, raw.Length.WritePayloadLength(), new ReadOnlySpan<byte>(raw))
         {
         }
     
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
         [CLSCompliant(false)]
-        public Opaque(int Item1, Span<byte> Item2, Span<byte> stream)
+        public Opaque(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             _raw = stream.ToArray();
             _length = Item2.ToArray();

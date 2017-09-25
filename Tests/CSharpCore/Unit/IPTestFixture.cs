@@ -25,8 +25,8 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Throws<ArgumentNullException>(() => new IP((byte[])null));
             Assert.Throws<FormatException>(() => new IP("test"));
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new IP(0, new Span<byte>(new byte[] { 0 }), null));
-            Assert.Throws<ArgumentException>(() => new IP(1, new Span<byte>(new byte[] { 1 }), new Span<byte>()));
+            Assert.Throws<ArgumentNullException>(() => new IP(0, new ReadOnlySpan<byte>(new byte[] { 0 }), null));
+            Assert.Throws<ArgumentException>(() => new IP(1, new ReadOnlySpan<byte>(new byte[] { 1 }), new ReadOnlySpan<byte>()));
 #else
             Assert.Throws<ArgumentNullException>(() => new IP(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             var memoryStream = new MemoryStream();

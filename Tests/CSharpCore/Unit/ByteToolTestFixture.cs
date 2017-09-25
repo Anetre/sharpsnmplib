@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestReadShortLength()
         {
-            var m = new Span<byte>(new[] { (byte)0x66 });
+            var m = new ReadOnlySpan<byte>(new[] { (byte)0x66 });
             var Item1 = 0;
             var Item2 = m.ReadPayloadLength(out Item1);
             Assert.Equal(102, Item1);
@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Unit
         public void TestReadLongLength()
         {
             byte[] expected = new byte[] { 0x83, 0x73, 0x59, 0xB5 };
-            var m = new Span<byte>(expected);
+            var m = new ReadOnlySpan<byte>(expected);
             var Item1 = 0;
             m.ReadPayloadLength(out Item1);
             Assert.Equal(7559605, Item1);

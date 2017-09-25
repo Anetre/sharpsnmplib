@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             Assert.Throws<ArgumentNullException>(() => new ReportPdu(0, ErrorCode.NoError, 0, null));
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new ReportPdu(0, new Span<byte>(new byte[] { 0 }), null));
+            Assert.Throws<ArgumentNullException>(() => new ReportPdu(0, new ReadOnlySpan<byte>(new byte[] { 0 }), null));
 #else
             Assert.Throws<ArgumentNullException>(() => new ReportPdu(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
 #endif

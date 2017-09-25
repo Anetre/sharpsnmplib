@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="type">Type code.</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        public static ISnmpData CreateSnmpData(Span<byte> span, int start, out int next)
+        public static ISnmpData CreateSnmpData(ReadOnlySpan<byte> span, int start, out int next)
         {
             var type = span[start];
             var offset = start + 1;
@@ -153,7 +153,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(buffer));
             }
 
-            var m = new Span<byte>(buffer, index, count);
+            var m = new ReadOnlySpan<byte>(buffer, index, count);
             var next = 0;
             return CreateSnmpData(m, 0, out next);
         }

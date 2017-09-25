@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
         [CLSCompliant(false)]
-        public OctetString(int Item1, Span<byte> Item2, Span<byte> stream)
+        public OctetString(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             _raw = stream.ToArray();
             Encoding = DefaultEncoding;
@@ -153,9 +153,9 @@ namespace Lextm.SharpSnmpLib
 
 #if NETCOREAPP2_0
         [CLSCompliant(false)]
-        public Span<byte> GetSpan()
+        public ReadOnlySpan<byte> GetSpan()
         {
-            return new Span<byte>(_raw);
+            return new ReadOnlySpan<byte>(_raw);
         }
 #endif
         /// <summary>

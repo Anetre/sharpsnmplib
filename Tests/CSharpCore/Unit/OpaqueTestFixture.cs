@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             Assert.Throws<NullReferenceException>(()=>new Opaque(null));
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new Opaque(1, new Span<byte>(new byte[0]), null));
+            Assert.Throws<ArgumentNullException>(() => new Opaque(1, new ReadOnlySpan<byte>(new byte[0]), null));
 #else
             Assert.Throws<ArgumentNullException>(() => new Opaque(null, null));
             Assert.Throws<ArgumentNullException>(() => new Opaque(new Tuple<int, byte[]>(1, new byte[0]), null));

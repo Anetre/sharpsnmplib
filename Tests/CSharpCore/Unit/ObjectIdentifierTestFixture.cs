@@ -15,8 +15,8 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {5, 8}));
             Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {1, 80}));
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(0, new Span<byte>(new byte[] { 0 }), null));
-            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(0, new Span<byte>(new byte[] { 0 }), new Span<byte>()));
+            Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(0, new ReadOnlySpan<byte>(new byte[] { 0 }), null));
+            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(0, new ReadOnlySpan<byte>(new byte[] { 0 }), new ReadOnlySpan<byte>()));
 #else
             Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new Tuple<int, byte[]>(0, new byte[] { 0 }), new MemoryStream()));

@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
         [CLSCompliant(false)]
-        public InformRequestPdu(int Item1, Span<byte> Item2, Span<byte> stream)
+        public InformRequestPdu(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             var next = 0;
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream, next, out next);

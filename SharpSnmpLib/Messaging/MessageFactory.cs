@@ -103,7 +103,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
-            var stream = new Span<byte>(buffer, index, length);
+            var stream = new ReadOnlySpan<byte>(buffer, index, length);
             int start = 0;
             while (true)
             {
@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return result;
         }
 
-        private static ISnmpMessage ParseMessage(Span<byte> span, UserRegistry registry, int start, out int next)
+        private static ISnmpMessage ParseMessage(ReadOnlySpan<byte> span, UserRegistry registry, int start, out int next)
         {
             var stream = span.Slice(start);
             var end = 0;

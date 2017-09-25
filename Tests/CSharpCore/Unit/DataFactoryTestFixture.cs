@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Unit
         {
 #if NETCOREAPP2_0
             var next = 0;
-            Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData((Span<byte>)null, 0, out next));
+            Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData((ReadOnlySpan<byte>)null, 0, out next));
             Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData(null, 0, out next));
 #else
             Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData((Stream)null));

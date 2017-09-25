@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         internal ObjectIdentifier(byte[] raw)
 #if NETCOREAPP2_0
-            : this(raw.Length, raw.Length.WritePayloadLength(), new Span<byte>(raw))
+            : this(raw.Length, raw.Length.WritePayloadLength(), new ReadOnlySpan<byte>(raw))
 #else
             : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
 #endif
@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
         [CLSCompliant(false)]
-        public ObjectIdentifier(int Item1, Span<byte> Item2, Span<byte> stream)
+        public ObjectIdentifier(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             _raw = stream.ToArray();
             if (Item1 == 0)

@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">The length data.</param>
         /// <param name="stream">The stream.</param>
         [CLSCompliant(false)]
-        public EndOfMibView(int Item1, Span<byte> Item2, Span<byte> stream)
+        public EndOfMibView(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             _length = Item2.ToArray();
         }

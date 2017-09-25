@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
         [CLSCompliant(false)]
-        public Sequence(int Item1, Span<byte> Item2, Span<byte> stream)
+        public Sequence(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             _length = Item2.ToArray();
             if (Item1 == 0)

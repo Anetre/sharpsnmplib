@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib
     public static class StreamExtension
     {
 #if NETCOREAPP2_0
-        internal static Span<byte> ReadPayloadLength(this Span<byte> stream, out int length)
+        internal static ReadOnlySpan<byte> ReadPayloadLength(this ReadOnlySpan<byte> stream, out int length)
         {
             var firstByte = stream[0];
             if ((firstByte & 0x80) == 0)

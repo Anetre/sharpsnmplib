@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw"></param>
         internal Counter64(byte[] raw)
 #if NETCOREAPP2_0
-            : this(raw.Length, raw.Length.WritePayloadLength(), new Span<byte>(raw))
+            : this(raw.Length, raw.Length.WritePayloadLength(), new ReadOnlySpan<byte>(raw))
 #else
             : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
 #endif
@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
         [CLSCompliant(false)]
-        public Counter64(int Item1, Span<byte> Item2, Span<byte> stream)
+        public Counter64(int Item1, ReadOnlySpan<byte> Item2, ReadOnlySpan<byte> stream)
         {
             if (Item1 <= 0 || Item1 > 9)
             {

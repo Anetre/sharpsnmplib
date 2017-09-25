@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(0, null, 0, null));
             Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(0, new ObjectIdentifier("1.3.6.1"), 0, null));
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(0, new Span<byte>(new byte[] { 0 }), null));
+            Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(0, new ReadOnlySpan<byte>(new byte[] { 0 }), null));
 #else
             Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(null, new MemoryStream()));

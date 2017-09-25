@@ -25,9 +25,9 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Equal("14532202884452442569", counter64.ToString());
 
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new Counter64(0, new Span<byte>(new byte[] { 0 }), null));
-            Assert.Throws<ArgumentException>(() => new Counter64(-1, new Span<byte>(new[] { (byte)255 }), new Span<byte>()));
-            Assert.Throws<ArgumentException>(() => new Counter64(10, new Span<byte>(new byte[] { 10 }), new Span<byte>()));
+            Assert.Throws<ArgumentNullException>(() => new Counter64(0, new ReadOnlySpan<byte>(new byte[] { 0 }), null));
+            Assert.Throws<ArgumentException>(() => new Counter64(-1, new ReadOnlySpan<byte>(new[] { (byte)255 }), new ReadOnlySpan<byte>()));
+            Assert.Throws<ArgumentException>(() => new Counter64(10, new ReadOnlySpan<byte>(new byte[] { 10 }), new ReadOnlySpan<byte>()));
 #else
             Assert.Throws<ArgumentNullException>(() => new Counter64(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new Counter64(null, new MemoryStream()));

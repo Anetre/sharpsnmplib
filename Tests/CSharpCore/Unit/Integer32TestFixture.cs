@@ -24,10 +24,10 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             Assert.Throws<ArgumentNullException>(() => new Integer32(6).AppendBytesTo(null));
 #if NETCOREAPP2_0
-            Assert.Throws<ArgumentNullException>(() => new Integer32(0, new Span<byte>(new byte[] { 0 }), null));
-            Assert.Throws<ArgumentException>(() => new Integer32(0, new Span<byte>(new byte[] { 0 }), new Span<byte>()));
-            Assert.Throws<ArgumentException>(() => new Integer32(-1, new Span<byte>(new[] { (byte)255 }), new Span<byte>()));
-            Assert.Throws<ArgumentException>(() => new Integer32(6, new Span<byte>(new byte[] { 6 }), new Span<byte>()));
+            Assert.Throws<ArgumentNullException>(() => new Integer32(0, new ReadOnlySpan<byte>(new byte[] { 0 }), null));
+            Assert.Throws<ArgumentException>(() => new Integer32(0, new ReadOnlySpan<byte>(new byte[] { 0 }), new ReadOnlySpan<byte>()));
+            Assert.Throws<ArgumentException>(() => new Integer32(-1, new ReadOnlySpan<byte>(new[] { (byte)255 }), new ReadOnlySpan<byte>()));
+            Assert.Throws<ArgumentException>(() => new Integer32(6, new ReadOnlySpan<byte>(new byte[] { 6 }), new ReadOnlySpan<byte>()));
 #else
             Assert.Throws<ArgumentNullException>(() => new Integer32(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             var memoryStream = new MemoryStream();
