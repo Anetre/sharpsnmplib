@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Integration
 {
     public class TrapDaemonTestFixture
     {
-        static NumberGenerator port = new NumberGenerator(40000, 65000);
+        static NumberGenerator port = new NumberGenerator(45000, 50000);
 
         [Fact]
         public async Task TestTrapV2HandlerWithV2Message()
