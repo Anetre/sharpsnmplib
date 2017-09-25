@@ -44,10 +44,15 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
             listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            Assert.False(listener.Active);
             listener.Start();
+            Assert.True(listener.Active);
             listener.Stop();
+            Assert.False(listener.Active);
             listener.Start();
+            Assert.True(listener.Active);
             listener.Stop();
+            Assert.False(listener.Active);
         }
 
         [Fact]
@@ -56,9 +61,13 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
             listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            Assert.False(listener.Active);
             listener.Start();
+            Assert.True(listener.Active);
             listener.Start();
+            Assert.True(listener.Active);
             listener.Stop();
+            Assert.False(listener.Active);
         }
 
         [Fact]
@@ -67,9 +76,13 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
             listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            Assert.False(listener.Active);
             listener.Start();
+            Assert.True(listener.Active);
             listener.Stop();
+            Assert.False(listener.Active);
             listener.Stop();
+            Assert.False(listener.Active);
         }
 
         [Fact]
@@ -78,7 +91,9 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();
             listener.AddBinding(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
+            Assert.False(listener.Active);
             listener.Stop();
+            Assert.False(listener.Active);
         }
     }
 }
